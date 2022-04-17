@@ -1,0 +1,62 @@
+create database store;
+
+create table countries(
+code int primary key ,
+name varchar(20) unique,
+continent_name varchar(20) not null,
+
+);
+create table users(
+id int primary key ,
+full_name varchar(20),
+email varchar(20)unique,
+gender char(1) check (gender='M'or gender='F'),
+data_of_birth varchar(15),
+created_at datetime,
+country_code int,
+foreign key (country_code) references countries(code)
+ 
+);
+create table orders(
+id int primary key,
+user_id int ,
+status varchar(6) check (status ='start'or status ='finish'),
+created_at datetime,
+foreign key (user_id) references users(id)
+
+
+);
+create table order_products(
+order_id int primary key,
+product_id int primary key,
+quantity integer default 0,
+foreign key (order_id) references orders(id)
+foreign key (product_id) references products(id)
+
+
+);
+create table products(
+id int primary key,
+name varchar(10) not null,
+price integer default 0, 
+status varchar(10) check (status ='valid'or status ='expired'),
+created_at datetime,
+
+
+);
+
+
+insert into countries values ('555','amal','Kindom Saudi Arabia');
+
+insert into users values ('0001','amal Abdullah Ali','Amal_@hotmail.com','femail','23.jun.1999','4.jun.2018','555');
+
+insert into orders values ('00001','0001','start','4.jun.2018');
+
+insert into order_products values ('00001','606','10');
+
+insert into products values ('606','shoes','300','valid','20.jun.2022');
+
+
+update countries set name='Ali' where id='555';
+
+delete from products where id='606';
